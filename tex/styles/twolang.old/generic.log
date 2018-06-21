@@ -1,0 +1,80 @@
+This is TeX, Version 3.14159 (Web2C 7.4.5) (format=latex 2004.10.4)  18 FEB 2005 15:18
+**generic.ins
+(./generic.ins
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+File name
+
+\stylename=twolang
+(/usr/share/texmf/tex/latex/base/docstrip.tex
+\blockLevel=\count79
+\emptyLines=\count80
+\processedLines=\count81
+\commentsRemoved=\count82
+\commentsPassed=\count83
+\codeLinesPassed=\count84
+\TotalprocessedLines=\count85
+\TotalcommentsRemoved=\count86
+\TotalcommentsPassed=\count87
+\TotalcodeLinesPassed=\count88
+\NumberOfFiles=\count89
+\inFile=\read1
+\inputcheck=\read2
+\off@0=\count90
+\off@1=\count91
+\off@2=\count92
+\off@3=\count93
+\off@4=\count94
+\off@5=\count95
+\off@6=\count96
+\off@7=\count97
+\off@8=\count98
+\off@9=\count99
+\off@10=\count100
+\off@11=\count101
+\off@12=\count102
+\off@13=\count103
+\off@14=\count104
+\off@15=\count105
+\@maxfiles=\count106
+\@maxoutfiles=\count107
+
+Utility: `docstrip' 2.5b <1998/04/28>
+English documentation    <1999/03/31>
+
+**********************************************************
+* This program converts documented macro-files into fast *
+* loadable files by stripping off (nearly) all comments! *
+**********************************************************
+
+********************************************************
+* No Configuration file found, using default settings. *
+********************************************************
+
+(./generic.ins
+File name
+
+\stylename=twolang
+
+Generating file(s) ./twolang.sty 
+\openout0 = `./twolang.sty'.
+
+
+Processing file twolang.dtx (package) -> twolang.sty
+Lines  processed: 208
+Comments removed: 115
+Comments  passed: 38
+Codelines passed: 50
+
+) ) ) 
+Here is how much of TeX's memory you used:
+ 315 strings out of 95847
+ 3072 string characters out of 1195962
+ 52577 words of memory out of 1000001
+ 3336 multiletter control sequences out of 10000+50000
+ 3640 words of font info for 14 fonts, out of 500000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 16i,0n,18p,200b,123s stack positions out of 1500i,500n,5000p,200000b,5000s
+
+No pages of output.

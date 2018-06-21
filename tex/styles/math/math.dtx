@@ -1,0 +1,689 @@
+% \iffalse
+%% $Id: math.dtx,v 1.12 2003/05/14 15:17:34 deutsch Exp $ 
+%% Copyright (C) 2000 Dietrich Paulus
+%
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{math}
+%<package>         [2002/02/13 v1.02 Math Package (LME)]
+%
+%<package>\def\twolang#1#2{#1} % ^^A Default
+%<german>\def\twolang#1#2{#1}
+%<english>\def\twolang#1#2{#1}
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{a4}
+\usepackage{math}
+\usepackage{german}
+\GetFileInfo{math.sty}
+\setcounter{IndexColumns}{2}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\setcounter{IndexColumns}{2}
+\setlength{\IndexMin}{30ex}
+\setlength{\columnseprule}{.4pt}
+\AtBeginDocument{\addtocontents{toc}{\protect\begin{multicols}{2}}}
+\AtEndDocument{\addtocontents{toc}{\protect\end{multicols}}}
+\begin{document}
+\DocInput{math.dtx}
+\end{document}
+%</driver>
+%
+% Copyright (C) 2000, by Dietrich Paulus and Andreas Winzen.  
+% All rights reserved.
+%
+% IMPORTANT NOTICE:
+%
+% You are not allowed to change this file.  You may however copy
+% this file to a file with a different name and then change the
+% copy if you obey the restrictions on file changes described in
+% math.ins.
+%
+% You are NOT ALLOWED to distribute this file alone.  You are NOT
+% ALLOWED to take money for the distribution or use of this file
+% (or a changed version) except for a nominal charge for copying
+% etc.
+%
+% You are allowed to distribute this file under the condition that
+% it is distributed together with all files mentioned in
+% everyshi.ins.
+%
+% If you receive only some of these files from someone, complain!
+%
+% However, if these files are distributed by established suppliers
+% as part of a complete TeX distribution, and the structure of the
+% distribution would make it difficult to distribute the whole set
+% of files, *those parties* are allowed to distribute only some of
+% the files provided that it is made clear that the user will get
+% a complete distribution-set upon request to that supplier (not
+% me).  Notice that this permission is not granted to the end
+% user.
+%
+%
+% For error reports in case of UNCHANGED versions see everyshi.ins
+%
+% \fi
+%
+% ^^A \CheckSum{533}
+%
+%% \CharacterTable
+%% {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%  Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%  Digits        \0\1\2\3\4\5\6\7\8\9
+%%  Exclamation   \!     Double quote  \"     Hash (number) \#
+%%  Dollar        \$     Percent       \%     Ampersand     \&
+%%  Acute accent  \'     Left paren    \(     Right paren   \)
+%%  Asterisk      \*     Plus          \+     Comma         \,
+%%  Minus         \-     Point         \.     Solidus       \/
+%%  Colon         \:     Semicolon     \;     Less than     \<
+%%  Equals        \=     Greater than  \>     Question mark \?
+%%  Commercial at \@     Left bracket  \[     Backslash     \\
+%%  Right bracket \]     Circumflex    \^     Underscore    \_
+%%  Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%  Right brace   \}     Tilde         \~}
+%%
+%% \iffalse meta-comment
+%% ===================================================================
+%%  @LaTeX-package-file{
+%%     author          = {Dietrich Paulus},
+%%     version         = "$Revision: 1.12 $",
+%%     date            = "$Date: 2003/05/14 15:17:34 $"
+%%     filename        = "math.sty",
+%%     address         = {Dietrich Paulus,
+%%                        Martensstr. 3 \
+%%                        D-91058 Erlangen
+%%     telephone       = "+49-9131-8527894",
+%%     email           = "paulus@cs.fau.de",
+%%     codetable       = "ISO/ASCII",
+%%     keywords        = "LaTeX2e, \shipout",
+%%     supported       = "yes",
+%%     docstring       = "LaTeX package which defines a new hook
+%%                        \EveryShipout".
+%%  }
+%% ===================================================================
+%% \fi
+%
+%  \changes{v1.00}{1994/12/04}{New}
+%  \changes{v1.01}{2000/02/19}{Documentation with doc package}
+%
+%  \IndexPrologue{^^A
+%     \section*{Index}^^A
+%     \markboth{Index}{Index}^^A
+%     Numbers written in \emph{italic} refer to the page where the
+%     corresponding entry is described, the ones
+%     \underline{underlined} to the definition, the rest to the places
+%     where the entry is used.}
+%
+% ^^A -----------------------------
+%
+%  \title{\unskip
+%           The \textsf{math} package^^A
+%           \thanks{^^A
+%              The version umber of this file is \fileversion,
+%              last revised \filedate.\newline
+%           }
+%        }
+%  \author{Andreas Winzen \and \ Dietrich Paulus}
+%  \date{\filedate}
+%  \maketitle
+%
+% ^^A -----------------------------
+%  \makeatletter
+%  \@ifundefined{explanlen}{\newcommand{\explanlen}{4cm}}{}
+% ^^A -----------------------------
+%
+%  \begin{abstract}
+%     This package defines a new commands for
+%     easy math formatting and font selection
+%  \end{abstract}
+%
+%  \pagestyle{headings}
+%
+% ^^A -----------------------------
+%
+%  \tableofcontents
+%
+% ^^A -----------------------------
+%
+%  \section{Einleitung}
+%
+%  Aufgabe dieses Pakets ist es
+%  einen Dokumentstil f"ur mathematische Symbole und Abk"urzungen zur
+%  Verf"ugung zu stellen.
+%
+%  {\em Alle Makros, soweit nicht anders angegeben, sind nur im mathematischen
+%  Modus verwendbar.}
+%
+%  Die urspr"ungliche Version stammt von Andreas Winzen.
+%
+% ^^A -----------------------------
+%
+%  \section{Verwendung}
+%
+%  \MakeShortVerb{\?}
+%  Bei Makros, deren Argumentlisten in runde Klammern eingeschlossen sind
+%  (z.B.\ ?\rowvec? und ?\colvec?) 
+%  ist die Argumentanzahl beliebig.
+%  Mehrere Argumente werden dabei durch Kommata getrennt.
+%
+%  Bei der Verwendung dieser Befehle ist noch zu beachten:
+%  \begin{itemize}
+%  \item Es handelt sich um "`zerbrechliche Befehle"' im Sinne von \LaTeX,
+%        die mit ?\protect? gesch"utzt werden m"u"sen, wenn sie
+%        innerhalb einer ?\caption?, ?\section?, \ldots
+%        Anweisung stehen.
+%  \item Bei den Makros mit runden Klammern werden Argumente nicht als
+%        wohlgeformte Klammerausdruecke geparst 
+%        (dies einzustellen, h"atte andere
+%        Nachteile).
+%        Beispiel:\\
+%        ?\set(a,b,(a+b),c)? entspricht ?{\set(a,b,(a+b)},c)?\ :\ \ 
+%        $\set(a,b,(a+b),c)$\\
+%        richtig w"are ?\set(a,b,{(a+b)},c)?\ :\ \ $\set(a,b,{(a+b)},c)$
+%  \item Schachtelungen dieser Makros sind m"oglich, die richtige
+%        Gruppierung der Argumente ist dabei zu beachten.
+%  \end{itemize}
+%  
+%  Beispiel:\\
+%  ?\colvec({\rowvec(\vec{x},?\\
+%  ?        {\colvec({\rowvec(a,b,c)},\transpose{\vec{y}})},?\\
+%  ?        {\colvec(a,b)})},? \\
+%  ?        {\colvec(\transpose{\vec{a}},\transpose{\vec{b}})})?
+%  \begin{displaymath}
+%  \colvec({\rowvec(\vec{x},{\colvec({\rowvec(a,b,c)},
+%     \transpose{\vec{y}})},{\colvec(a,b)})},
+%     {\colvec(\transpose{\vec{a}},\transpose{\vec{b}})})
+%  \end{displaymath}
+%  
+%  \subsection*{Allgemeine Operatoren}\strut\\
+%  
+%  \begin{tabular}{lll}
+%  ?\abs{x}? & $\abs{x}$ \\
+%  ?\mod? & $\mod$ \\
+%  ?\div? & $\div$ \\
+%  ?\ggT{x}{y}? & $\ggT{x}{y}$ \\
+%  ?\kgV{x}{y}? & $\kgV{x}{y}$ \\
+%  ?\floor{x}? & $\floor{x}$ \\
+%  ?\ceil{x}? & $\ceil{x}$ \\
+%  ?\sign? & $\sign$ \\
+%  ?\Undefined? & $\Undefined$ & Zeichen f"ur "`undefiniert"'\\
+%  ?\invers{x}? & $\invers{x}$ \\
+%  ?\defequal? & $\defequal$ \\
+%  ?\Defequal? & $\Defequal$ \\
+%  ?\shouldbe? & $\shouldbe$ \\
+%  ?\conjugate{x}? & $\conjugate{x}$ \\
+%  ?\defequivalent? & $\defequivalent$ \\
+%  ?\Defequivalent? & $\Defequivalent$ \\
+%  ?\equivalent? & $\equivalent$ \\
+%  ?\implies? & $\implies$ \\
+%  ?\Implies? & $\Implies$ \\
+%  ?\existsone? & $\existsone$ & "`Es existiert genau ein ..."'\\
+%  ?\logand? & $\logand$ \\
+%  ?\logor? & $\logor$ \\
+%  ?\logor? & $\logor$ \\
+%  ?\argmax? & $\argmax$ \\ ^^A version 2
+%  ?\argmin? & $\argmin$ \\ ^^A version 2
+%  \end{tabular}
+%  
+%  Das Makro ?\Undefined? ersetzt das fr"uher verwendete 
+%  \verb|\undefined| 
+%  (klein geschrieben), da dies an vielen Stellen zu Problemen 
+%  mit anderen Styles f"uhrte.
+% 
+%  \vspace*{\fill}
+%  
+%  \subsection*{Funktionsdefinitionen und Eigenschaften}\strut\\
+%  
+%  \begin{tabular}{llp{\explanlen}}
+%  ?\funv{x}? & $\funv{x}$ & Kennzeichnung von Funktionsnamen\\
+%  ?\defunvar{x}{y}? & $\defunvar{x}{y}$\\
+%  ?\funbuild{x}{y}? & $\funbuild{x}{y}$ & Funktionsbildungsoperator\\
+%  ?\domain? & $\domain$\\
+%  ?\range? & $\range$\\
+%  ?\image? & $\image$\\
+%  ?\mapsinj? & $\mapsinj$ & injektive Abbildung\\
+%  ?\mapssur? & $\mapssur$ & surjektive Abbildung\\
+%  ?\mapsbij? & $\mapsbij$ & bijektive Abbildung\\
+%  ?\mapspartial? & $\mapspartial$ & partielle Funktion\\
+%  ?\funprod? & $\funprod$ & Funktionenverkettung\\
+%  ?\defunran{D}{R}? & $\defunran{D}{R}$\\
+%  ?\depfunran{D}{R}? & $\depfunran{D}{R}$\\
+%  ?\defunction{D}{R}{x}{y}? & $\defunction{D}{R}{x}{y}$ 
+%                            & Funktionsdefinition\\
+%  ?\depfunction{D}{R}{x}{y}? & $\depfunction{D}{R}{x}{y}$ 
+%                             & Definition partieller Funktionen\\
+%  \end{tabular}
+%  
+%  \subsection*{Bool'sche Operatoren}\strut\\
+%  
+%  \begin{tabular}{llp{\explanlen}}
+%  ?\band? & $\band$\\
+%  ?\bor? & $\bor$\\
+%  ?\bxor? & $\bxor$\\
+%  ?\bnot{x}? & $\bnot{x}$\\
+%  \end{tabular}
+%  
+%  \subsection*{Vektoren und Matrizen}\strut\\
+%  
+%  \begin{tabular}{llp{\explanlen}}
+%  ?\vecprod? & $\vecprod$ & Vektorprodukt\\
+%  ?\scalprod? & $\scalprod$ & Skalarprodukt\\
+%  ?\tensorprod? & $\tensorprod$ & Tensorprodukt\\
+%  &&(dyadisches Produkt)\\
+%  ?\matprod? & $\matprod$ & Matrizenprodukt\\ 
+%  ?\transpose{\vec{x}}? & $\transpose{\vec{x}}$ & Transposition\\
+%  ?\adjungate{\vec{x}}? & $\adjungate{\vec{x}}$ & Adjunktion\\
+%  ?\norm{\vec{x}}? & $\norm{\vec{x}}$\\
+%  ?\determinant{\mat{A}}? & $\determinant{\mat{A}}$\\
+% ^^A  ?\rowvec(x_1,2,3,\frac{x+y}{xy},5,6,7)? & 
+% ^^A                $\rowvec(x_1,2,3,\frac{x+y}{xy},5,6,7)$ & Zeilenvektoren\\
+% ^^A ?\colvec(1,.,.,.,n,\frac{x+y}{xy})? & 
+% ^^A               $\colvec(1,.,.,.,n,\frac{x+y}{xy})$ & Spaltenvektoren\\
+%  ?\rowvec(x_1,2)? & & Beispiele im Text \\
+%  ?\colvec(1,.,.)? & & Beispiele im Text \\
+%  ?\unitvec{x}? & $\unitvec{x}$ & Einheitsvektor\\
+%  ?\vec{a}? & $\vec{a}$ & Kennzeichnung von Vektoren\\
+%  ?\mat{A}? & $\mat{A}$ & Kennzeichnung von Matrizen\\
+%  ?\idmat{n}? & $\idmat{n}$ & Einheitsmatrix\\
+%  ?\vecpl \vecpr \matpl \matpr? & $\vecpl \vecpr \matpl \matpr$ &
+%    Klammern, die in den Matrix- und\\
+% ^^A %%%%%%%%%%%%%%%%%%%%% Neu, DP BEG
+%  &&Vektor-Makros verwendet werden\\
+%  ?\begin{Matrix}(z,s)? \dots ?\end{Matrix}? & 
+%    $
+%                  \begin{Matrix}(3,2) 1 & 2 \\ 3 & 4 \\ 5 & 6 \end{Matrix} 
+%    $
+%               & Umgebung f"ur Matrizen
+% ^^A %%%%%%%%%%%%%%%%%%%%% Neu, DP END
+%  \end{tabular}
+%  
+%  \subsection*{Mengen und Folgen}\strut\\
+%  
+%  \begin{tabular}{lll}
+%  ?\setv{A}? & $\setv{A}$ & Kennzeichnung von Mengen-Variablen\\
+%  ?\set(1,2,3)? & $\set(1,2,3)$ & Schreibweise f"ur Mengen\\
+%  ?\seqv{A}? & $\seqv{A}$ & Kennzeichnung von Folgen-Variablen\\
+%  ?\sequence(1,\ldots,n)? & $\sequence(1,\ldots,n)$ & 
+%                    Schreibweise f"ur Folgen\\
+%  ?\without{\setv{A}}(e)? & $\without{\setv{A}}(element)$\\
+%  ?\with{\setv{A}}(e)? & $\with{\setv{A}}(element)$\\
+%  ?\cardinality{\setv{A}}? & $\cardinality{\setv{A}}$\\
+%  ?\setunion? & $\setunion$\\
+%  ?\setminus? & $\setminus$\\
+%  ?\setint? & $\setint$\\
+%  ?\setdisun? & $\setdisun$ & Disjunkte Vereinigung\\
+%  ?\setprod? & $\setprod$ & Cartesisches Produkt\\
+%  ?\powerset{\setv{M}}? & $\powerset{\setv{M}}$ & Potenzmenge\\
+%  \end{tabular}
+%  
+%  \subsection*{Zahlen}\strut\\
+%  
+%  \begin{tabular}{lll}
+%  ?\real? & $\real$ & reelle Zahlen\\
+%  ?\imaginary? & $\imaginary$ & imagin"are Zahlen\\
+%  ?\integer? & $\integer$ & ganze Zahlen\\
+%  ?\cardinal? & $\cardinal$ & nat"urliche Zahlen (ohne Null)\\
+%  ?\cardzero? & $\cardzero$ & nat"urliche Zahlen (mit Null)\\
+%  ?\complex? & $\complex$ & komplexe Zahlen\\
+%  ?\rational? & $\rational$ & rationale Zahlen\\
+%  \end{tabular}
+%  
+%  \subsection*{R"aume}\strut\\
+%  
+%  \begin{tabular}{lll}
+%  ?\vecspace{A}{n}? & $\vecspace{A}{n}$ & 
+%                   $n$-dimensionaler Vektorraum "uber $A$ \\
+%  ?\matspace{A}{n}{m}? & $\matspace{A}{n}{m}$ & 
+%                   $n\times m$-dimensionale Matrizen "uber $A$ \\
+%  ?\funspace{A}{B}? & $\funspace{A}{B}$ & 
+%                   Menge der Abbildungen von $A$ nach $B$\\
+%  \end{tabular}
+%  
+%  \subsection*{Br"uche}\strut\\
+%  
+%  \begin{tabular}{llp{\explanlen}}
+%  ?\half? & $\half$\\
+%  ?\onethird? & $\onethird$\\
+%  ?\twothird? & $\twothird$\\
+%  ?\dfrac{x}{y}? & $\dfrac{x}{y}$\\
+%  ?\tfrac{x}{y}? & $\tfrac{x}{y}$\\
+%  ?\scfrac{x}{y}? & $\scfrac{x}{y}$\\
+%  ?\scscfrac{x}{y}? & $\scscfrac{x}{y}$\\
+%  \end{tabular}
+%  
+%  \subsection*{Punkte, Linien, Strecken, etc.}\strut\\
+%  
+%  \begin{tabular}{llp{\explanlen}}
+%  ?\p{A}? & $\p{A}$ & Punkt\\
+%  ?\pti{A}{1}? & $\pti{A}{1}$ & Punkt mit Index\\
+%  ?\ptline{A}{1}{B}{2}? & $\ptline{A}{1}{B}{2}$ & Stecke bzw.\ Gerade\\
+%  ?\opolygon(A,B,C,D)? & $\opolygon(A,B,C,D)$ & offenes Polygon\\
+%  ?\cpolygon(A,B,C,D)? & $\cpolygon(A,B,C,D)$ & geschlossenes Polygon\\
+%  \end{tabular}
+%  
+%  \subsection*{Abk"urzungen (n. Kopka)}\strut\\
+%  
+%  \begin{tabular}{ll}
+%  ?\D? & ?\displaystyle? \\
+%  ?\T? & ?\textstyle? \\
+%  ?\SC? & ?\scriptstyle? \\
+%  ?\SCSC? & ?\scriptscriptstyle? \\
+%  \end{tabular}
+%  
+%  \subsection*{Zur Verwendung in Texten}\strut\\
+%  
+%  \begin{tabular}{ll}
+%  ?\complexity{n}? & \complexity{n}\\
+%  \end{tabular}
+%  
+%  \subsection*{Integraltransformationen}\strut\\
+%  
+%  \begin{tabular}{llp{\explanlen}}
+%  ?\laplacesym? & $\laplacesym$ \\
+%  ?\fouriersym? & $\fouriersym$ \\
+%  ?\laplace{f}? & $\laplace{f}$ \\
+%  ?\fourier{f}? & $\fourier{f}$ \\
+%  ?\ilaplace{f}? & $\ilaplace{f}$ \\
+%  ?\ifourier{f}? & $\ifourier{f}$ \\
+%  \end{tabular}
+%  
+%  \subsection*{Bemerkungen}\strut\\
+%  
+%  \begin{itemize}
+%  \item F"ur die mathematischen Zeichen werden die im \TeX-Buch beschriebenen
+%     Klassifikatoren f"ur Konstanten, einstellige Operatoren, etc.\ verwendet,
+%     sodass die Abst"ande zu anderen Zeichen in Gleichungen korrekt sein
+%     sollten.
+%  \end{itemize}
+%  
+% ^^A -----------------------------
+%
+%  \section{\twolang{Optionen}{Options}}
+%
+%  \twolang{Das Paket hat keine Optionen}
+%          {The package has no options}.
+% ^^A -----------------------------
+%
+%
+%  \section{Required packages}
+%
+%  Das Paket ben"otigt {\tt bm}.
+%
+% ^^A -----------------------------
+%
+%
+% \StopEventually{\vskip 0.4cm \hrule \vskip 0.4cm}
+%  ^^A \StopEventually{^^A
+%  ^^A    \PrintIndex\PrintChanges
+%  ^^A Make sure that the index is not printed twice
+%  ^^A (ltxdoc.cfg might have a second \PrintIndex command)
+%  ^^A \let\PrintChanges\relax
+%  ^^A    \let\PrintIndex\relax
+%  ^^A    }
+%
+% ^^A -----------------------------
+%
+%  \section{Die Implementierung}
+%
+%  \changes{v0.9}{1991/01/28}{Erste Version von A. Winzen}
+%  \changes{v2.0}{1994/02/15}{Letzte Version von A. Winzen}
+%  \changes{v3.0}{2001/01/01}{Latex2e Version von D. Paulus}
+%  \changes{v3.1}{2001/02/12}{Undefined eingef"uhrt}
+%
+%    \begin{macrocode}
+\RequirePackage{bm}
+%    \end{macrocode}
+%
+%  \begin{macro}{\abs}
+%   Absolutbetrag einer Zahl: ?\abs{x}? $\rightarrow$ $\abs{x}$
+%    \begin{macrocode}
+\def\abs#1{{\mathord{| #1 |}}}
+%    \end{macrocode}
+%  \end{macro}
+%
+%  Allgemeine Operationen
+%
+%  \begin{macro}{\mod}
+%    Modulus einer Zahl: ?\mod 3? $\rightarrow$ $\mod 3$
+%    \begin{macrocode}
+\def\mod{{\mathbin{\rm mod}}}
+%    \end{macrocode}
+%  \end{macro}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Das Folgende muss noch vervollst"andigt werden in der Dokumentation
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%    \begin{macrocode}
+\renewcommand{\div}{{\mathbin{\rm div}}}
+% `\div' ist als Divisionszeichen vordefiniert
+\def\ggT#1#2{{\mathord{{\rm ggT}\left({#1},{#2}\right)}}}
+\def\kgV#1#2{{\mathord{{\rm kgV}\left({#1},{#2}\right)}}}
+\def\floor#1{{\mathord{\left\lfloor #1 \right\rfloor}}}
+\def\ceil#1{{\mathord{\left\lceil #1 \right\rceil}}}
+\def\sign{{\mathord{{\rm sign}}}}
+\def\Undefined{{\mathord{\perp}}}
+\def\invers#1{{#1}^{-1}}
+\def\defequal{{\mathbin{:=}}}
+%\def\defequal{{\mathbin{\stackrel{\rm def}{=}}}}
+\def\Defequal{{\mathbin{=:}}}
+\def\shouldbe{{\mathbin{\stackrel{\rm !}{=}}}}
+\def\conjugate#1{\bar{#1}}
+%    \end{macrocode}
+%  \begin{macro}{\argmax}
+%    \begin{macrocode}
+\makeatletter \def\argmax{\mathop{\operator@font argmax}}
+%    \end{macrocode}
+%  \end{macro}
+%  \begin{macro}{\argmin}
+%    \begin{macrocode}
+\makeatletter \def\argmin{\mathop{\operator@font argmin}}
+%    \end{macrocode}
+%  \end{macro}
+%
+% Aussagenlogische Symbole
+%
+%    \begin{macrocode}
+\def\defequivalent{{\mathbin{:\Leftrightarrow}}}
+%\def\defequivalent{{\mathbin{\stackrel{\rm def}{\Leftrightarrow}}}}
+\def\Defequivalent{{\mathbin{\Leftrightarrow:}}}
+\def\equivalent{{\mathbin{\Leftrightarrow}}}
+\def\implies{{\mathbin{\Rightarrow}}}
+\def\Implies{{\mathbin{\Leftarrow}}}
+\def\existsone{{\mathop{\stackrel{.}{\exists}}}}
+%\def\existsone{{\mathop{\exists{\rm !}}}}
+\def\logand{{\mathbin{\wedge}}}
+\def\logor{{\mathbin{\vee}}}
+%    \end{macrocode}
+%
+% Funktionsdefinitionen und Eigenschaften
+%
+%    \begin{macrocode}
+\def\funv#1{{\mathord{\rm {#1}}}}
+\def\defunvar#1#2{{#1}\mapsto{#2}}
+\def\funbuild#1#2{\left\langle\defunvar{#1}{#2}\right\rangle}
+\def\domain{{\mathord{\rm dom}}}
+\def\range{{\mathord{\rm ran}}}
+\def\image{{\mathord{\rm im}}}
+\def\mapsinj{{\mathbin{\stackrel{\rm inj}{\longrightarrow}}}}
+\def\mapssur{{\mathbin{\stackrel{\rm sur}{\longrightarrow}}}}
+\def\mapsbij{{\mathbin{\stackrel{\rm bij}{\longrightarrow}}}}
+\def\mapspartial{{\mathbin{\rightharpoonup}}}
+\def\funprod{{\mathbin{\circ}}}
+\def\defunran#1#2{{#1}\longrightarrow{#2}}
+\def\depfunran#1#2{{#1}\mapspartial{#2}}
+\def\defunction#1#2#3#4{\left\{\begin{array}{l}\defunran{#1}{#2}\\ \defunvar{#3}{#4}\end{array}\right.}%}
+\def\depfunction#1#2#3#4{\left\{\begin{array}{l}\depfunran{#1}{#2}\\ \defunvar{#3}{#4}\end{array}\right.}%}
+%    \end{macrocode}
+
+% Bool'sche Operatoren
+%    \begin{macrocode}
+\def\band{{\mathbin{\wedge}}}
+\def\bor{{\mathbin{\vee}}}
+\def\bxor{{\mathbin{\not\equiv}}}
+\def\bnot#1{\bar{#1}}
+%    \end{macrocode}
+
+% Vektoren und Matrizen
+%    \begin{macrocode}
+\def\vecpl{\left(}
+\def\vecpr{\right)}
+\def\matpl{\left(}
+\def\matpr{\right)}
+\def\vecprod{{\mathbin{\times}}}
+\def\scalprod{{\mathbin{\cdot}}}
+\def\tensorprod{{\mathbin{\otimes}}}
+\def\matprod{\,}
+\def\transpose#1{{#1}^{\rm T}}
+\def\adjungate#1{{#1}^\ast}
+\def\norm#1{{\mathord{\| #1 \|}}}
+\def\determinant#1{{\mathord{\det\left( #1 \right)}}}
+%\def\determinant#1{{\mathord{\left| #1 \right|}}}
+\def\unitvec#1{{\mathord{\vec{e}_{#1}}}}
+%\def\mat#1{{\mathord{\underline{\rm #1}\,}}}
+\def\mat#1{\ensuremath{\bm#1}}
+\def\vec#1{\ensuremath{\bm#1}}
+\def\idmat#1{{\mat{{I\!d}}}_{#1}}
+
+%--------------------------{ Defs to parse (...) arg-lists
+% define endSymbol for list
+\def\@endlist{listend}
+% parse lists
+\long\def\@parselist(#1)(#2){%  1:sepSymbol 2:List
+  % define loop for parsing list
+  \global\long\def\toendoflist##1,##2){%
+    \ifx##2\@endlist ##1 \else ##1 #1 \toendoflist##2) \fi
+  }
+  % execute loop
+  \expandafter\toendoflist#2,\@endlist)
+}
+%--------------------------} Defs to parse (...) arg-lists
+
+\long\def\rowvec(#1){{ \vecpl
+ \@parselist(,)(#1)
+\vecpr }}
+
+\long\def\colvec(#1){{%
+ \vecpl
+ \begin{array}{c}
+ \expandafter\@parselist(\\)(#1)
+ \end{array}
+ \vecpr
+}}
+%    \end{macrocode}
+%  \begin{macro}{\Matrix}
+%    Die Umgebung ?\Matrix? wurde in Version 2.0 eingef"uhrt
+%    \begin{macrocode}
+%<*version2>
+\def\Matrix(#1,#2){\left(\begin{array}{*{#2}{c}}}
+\def\endMatrix{\end{array}\right)}
+%</version2>
+%    \end{macrocode}
+%  \end{macro}
+%
+% Mengen und Folgen
+%
+%  \begin{macro}{\setv}
+%    \begin{macrocode}
+%<*version1>
+\def\setv#1{{\mathord{\cal #1}}}
+%</version1>
+%<*version2>
+\def\setv#1{{#1}}  % Nach LME Richtlinie: \cal nur fuer Strukturen
+%</version2>
+%    \end{macrocode}
+%  \end{macro}
+%    \begin{macrocode}
+\long\def\set(#1){{\mathord{\left\{\@parselist(,)(#1)\right\}}}}
+\def\seqv#1{{\mathord{\cal #1}}}
+\long\def\sequence(#1){{\mathord{\left\langle\@parselist(,)(#1)\right\rangle}}}
+\long\def\without#1(#2){{{#1}\setminus\set(#2)}}
+\long\def\with#1(#2){{{#1}\setunion\set(#2)}}
+\def\setunion{{\mathbin{\cup}}}
+\def\setint{{\mathbin{\cap}}}
+\def\setdisun{{\mathbin{\stackrel{.}{\setunion}}}}
+\def\setprod{{\mathbin{\times}}}
+\def\cardinality#1{{\mathord{\left| {#1} \right|}}}
+\def\powerset#1{{\mathord{2^{#1}}}}
+%    \end{macrocode}
+
+% Zahlen
+%    \begin{macrocode}
+\def\real{\mathord{\rm I\!R}}
+\def\cardinal{\mathord{\rm I\!N}}
+\def\cardzero{\mathord{\rm I\!N}_0}
+%\def\imaginary{{\mathord{\Im}}}
+\def\imaginary{\mathord{\rm I\!I}}
+%\def\integer{{\mathord{\rm Z}}}
+\def\integer{\mathord{\rm Z\!\!Z}}
+\def\complex{{\mathord{\rm C}}}
+\def\rational{{\mathord{\rm Q}}}
+
+%    \end{macrocode}
+% R"aume
+%    \begin{macrocode}
+\def\vecspace#1#2{{#1}^{#2}}
+\def\matspace#1#2#3{{#1}^{\,({#2},{#3})}}
+\def\funspace#1#2{{#2}^{#1}}
+
+%    \end{macrocode}
+% vordefinierte Br"uche und Einstellungen f"ur Br"uche
+%    \begin{macrocode}
+\def\half{\frac{\scriptstyle 1}{\scriptstyle 2}}
+\def\onethird{\frac{\scriptstyle 1}{\scriptstyle 3}}
+\def\twothird{\frac{\scriptstyle 2}{\scriptstyle 3}}
+\def\dfrac#1#2{\frac{\displaystyle #1}{\displaystyle #2}}
+\def\tfrac#1#2{\frac{\textstyle #1}{\textstyle #2}}
+\def\scfrac#1#2{\frac{\scriptstyle #1}{\scriptstyle #2}}
+\def\scscfrac#1#2{\frac{\scriptscriptstyle #1}{\scriptscriptstyle #2}}
+
+%    \end{macrocode}
+% Punkte und Linien, Strecken, etc.
+%    \begin{macrocode}
+\def\p#1{{\mathord{\sf #1}}}
+\def\pti#1#2{{\mathord{\sf #1}_{\rm #2}}}
+\def\ptline#1#2#3#4{\overline{{\sf #1}_{\rm #2}{\sf #3}}_{\rm #4}}
+
+\long\def\opolygon(#1){{\overline{\@parselist(\,)(#1)}}}
+\long\def\cpolygon(#1,#2){{\overline{#1\,\@parselist(\,)(#2)\,#1}}}
+
+%    \end{macrocode}
+% Abk"urzungen zur Texteinstellung (nach Vorschlag von H.Kopka)
+%    \begin{macrocode}
+\def\D{\displaystyle}
+\def\T{\textstyle}
+\def\SC{\scriptstyle}
+\def\SCSC{\scriptscriptstyle}
+
+%    \end{macrocode}
+%  \begin{macro}{\complexity}
+%        zur Verwendung in Texten
+%    \begin{macrocode}
+\def\complexity#1{{${\rm O}(#1)$}}
+%    \end{macrocode}
+%  \end{macro}
+
+% Integraltransfomationen
+%    \begin{macrocode}
+\def\laplacesym{{\mathord{\cal L}}}
+\def\fouriersym{{\mathord{\rm FT}}}
+\def\laplace#1{\laplacesym\{{#1}\}}
+\def\fourier#1{\fouriersym\{{#1}\}}
+\def\ilaplace#1{\invers{\laplacesym}\{{#1}\}}
+\def\ifourier#1{\invers{\fouriersym}\{{#1}\}}
+%    \end{macrocode}
+%
+% ^^A -----------------------------
+%
+%  \section{Acknowledgements}
+%  ^^A
+%  Original von Andreas Winzen
+%
+%  Neue Dokumenation und Anpassung an \LaTeX2$\epsilon$ von 
+%  Dietrich Paulus
+% 
+%  Version 2.0: Dietrich Paulus
+% ^^A -----------------------------
+%
+%  \Finale
+

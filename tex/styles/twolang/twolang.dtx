@@ -1,0 +1,208 @@
+% \iffalse
+%% $Id: twolang.dtx,v 1.1 2001/02/05 07:36:42 paulus Exp paulus $ 
+%% Copyright (C) 2000 Dietrich Paulus
+%
+%<package>\NeedsTeXFormat{LaTeX2e}
+%<package>\ProvidesPackage{twolang}
+%<package>         [2000/02/19 v1.01 SUB Package (LME)]
+%
+%<*driver>
+\documentclass{ltxdoc}
+\usepackage{a4}
+\usepackage{twolang}
+\usepackage{ngerman}
+\GetFileInfo{twolang.sty}
+\setcounter{IndexColumns}{2}
+\EnableCrossrefs
+\CodelineIndex
+\RecordChanges
+\setcounter{IndexColumns}{2}
+\setlength{\IndexMin}{30ex}
+\setlength{\columnseprule}{.4pt}
+\AtBeginDocument{\addtocontents{toc}{\protect\begin{multicols}{2}}}
+\AtEndDocument{\addtocontents{toc}{\protect\end{multicols}}}
+\begin{document}
+\DocInput{twolang.dtx}
+\end{document}
+%</driver>
+%
+% Copyright (C) 2000, by Dietrich Paulus 
+% All rights reserved.
+%
+% IMPORTANT NOTICE:
+%
+% You are not allowed to change this file.  You may however copy
+% this file to a file with a different name and then change the
+% copy if you obey the restrictions on file changes described in
+% twolang.ins.
+%
+% You are NOT ALLOWED to distribute this file alone.  You are NOT
+% ALLOWED to take money for the distribution or use of this file
+% (or a changed version) except for a nominal charge for copying
+% etc.
+%
+% You are allowed to distribute this file under the condition that
+% it is distributed together with all files mentioned in
+% everyshi.ins.
+%
+% If you receive only some of these files from someone, complain!
+%
+% However, if these files are distributed by established suppliers
+% as part of a complete TeX distribution, and the structure of the
+% distribution would make it difficult to distribute the whole set
+% of files, *those parties* are allowed to distribute only some of
+% the files provided that it is made clear that the user will get
+% a complete distribution-set upon request to that supplier (not
+% me).  Notice that this permission is not granted to the end
+% user.
+%
+% \fi
+%
+% ^^A \CheckSum{9}
+%
+%% \CharacterTable
+%% {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%  Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%  Digits        \0\1\2\3\4\5\6\7\8\9
+%%  Exclamation   \!     Double quote  \"     Hash (number) \#
+%%  Dollar        \$     Percent       \%     Ampersand     \&
+%%  Acute accent  \'     Left paren    \(     Right paren   \)
+%%  Asterisk      \*     Plus          \+     Comma         \,
+%%  Minus         \-     Point         \.     Solidus       \/
+%%  Colon         \:     Semicolon     \;     Less than     \<
+%%  Equals        \=     Greater than  \>     Question mark \?
+%%  Commercial at \@     Left bracket  \[     Backslash     \\
+%%  Right bracket \]     Circumflex    \^     Underscore    \_
+%%  Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%  Right brace   \}     Tilde         \~}
+%%
+%% \iffalse meta-comment
+%% ===================================================================
+%%  @LaTeX-package-file{
+%%     author          = {Dietrich Paulus},
+%%     version         = "$Revision: 1.1 $",
+%%     date            = "$Date: 2001/02/05 07:36:42 $"
+%%     filename        = "twolang.sty",
+%%     address         = {Dietrich Paulus,
+%%                        Martensstr. 3 \
+%%                        D-91058 Erlangen
+%%     telephone       = "+49-9131-8527894",
+%%     email           = "paulus@cs.fau.de",
+%%     codetable       = "ISO/ASCII",
+%%     keywords        = "LaTeX2e, \shipout",
+%%     supported       = "yes",
+%%     docstring       = "LaTeX package which defines a new hook
+%%                        \EveryShipout".
+%%  }
+%% ===================================================================
+%% \fi
+%
+%
+%  \IndexPrologue{^^A
+%     \section*{Index}^^A
+%     \markboth{Index}{Index}^^A
+%     Numbers written in \emph{italic} refer to the page where the
+%     corresponding entry is described, the ones
+%     \underline{underlined} to the definition, the rest to the places
+%     where the entry is used.}
+% ^^A -----------------------------
+%
+%  \changes{v1.00}{1994/12/04}{Birnthaler}
+%  \changes{v1.01}{2000/03/27}{Documentation with doc package}
+%
+% ^^A -----------------------------
+%
+%  \title{\unskip
+%           The \textsf{twolang} package^^A
+%           \thanks{^^A
+%              The version umber of this file is \fileversion,
+%              last revised \filedate.\newline
+%           }
+%        }
+%  \author{Dietrich Paulus}
+%  \date{\filedate}
+%  \maketitle
+%
+% ^^A -----------------------------
+%  \makeatletter
+%  \@ifundefined{explanlen}{\newcommand{\explanlen}{4cm}}{}
+% ^^A -----------------------------
+%
+%  \begin{abstract}
+%     \twolang
+%       {Dieses einfache Paket stellt ein Makro f"ur zweisprachige Texte 
+%        zur Verf"ugung}
+%       {This simple package provides a macro for bi-lingual texts}
+%  \end{abstract}
+%
+%  \pagestyle{headings}
+%
+% ^^A -----------------------------
+%
+%  \tableofcontents
+%
+% ^^A -----------------------------
+%  \section{\twolang{Einleitung}{Introduction}}
+%
+%       \twolang{Alles ist bereits in der Kurzfassung gesagt}
+%               {Everything has already been said in the introduction}:
+%    
+%       \twolang
+%        {Dieses einfache Paket stellt ein Makro f"ur zweisprachige Texte 
+%        zur Verf"ugung}
+%       {This simple package provides a macro for bi-lingual texts}
+%
+% ^^A -----------------------------
+%
+% \StopEventually{\vskip 0.4cm \hrule \vskip 0.4cm}
+%
+%  \section{Usage}
+%
+%  \MakeShortVerb{\?}
+%    \begin{macrocode}
+\RequirePackage{ngerman}
+\DeclareOption{ngerman}{\selectlanguage{\ngerman}}      % 
+\DeclareOption{english}{\selectlanguage{\english}}      % 
+\ProcessOptions            
+\makeatletter
+\long\def\twolang#1#2{%
+	\ifnum\language=\l@ngerman
+		#1%
+	\else
+		#2%
+	\fi
+}
+%    \end{macrocode}
+%
+%    Im deutschen Text sollte die Bildunterschrift "`Bild"' hei"sen.
+%    Diese "Anderung sollten auch nach einer zwischenzeitlichen
+%    Umschaltung auf English erhalten bleiben.
+%    Daher wird das Makro captionsngerman komplett redefiniert.
+%
+%    \begin{macrocode}
+\renewcommand{\captionsngerman}{%
+  \def\prefacename{Vorwort}%
+  \def\refname{Literatur}%
+  \def\abstractname{Zusammenfassung}%
+  \def\bibname{Literaturverzeichnis}%
+  \def\chaptername{Kapitel}%
+  \def\appendixname{Anhang}%
+  \def\contentsname{Inhaltsverzeichnis}% % oder nur: Inhalt
+  \def\figurename{Bild}%
+  \def\listfigurename{Verzeichnis der Bilder}%
+  \def\listtablename{Verzeichnis der Tabellen}%
+  \def\indexname{Index}%
+  \def\tablename{Tabelle}%  % oder: Tafel
+  \def\partname{Teil}%
+  \def\enclname{Anlage(n):}% % oder: Beilage(n)
+  \def\ccname{Verteiler}%   % oder: Kopien an
+  \def\headtoname{An}%
+  \def\pagename{Seite}%
+  \def\seename{siehe}%
+  \def\alsoname{siehe auch}}
+\ifnum\language=\l@ngerman\selectlanguage{\ngerman}\fi % reload captionsngerman
+%    \end{macrocode}
+%
+% ^^A -----------------------------
+%
+%  \Finale

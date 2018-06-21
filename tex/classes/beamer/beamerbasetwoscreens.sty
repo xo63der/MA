@@ -1,0 +1,60 @@
+\ProvidesPackageRCS $Header: /cvsroot/latex-beamer/latex-beamer/base/beamerbasetwoscreens.sty,v 1.5 2004/12/08 11:21:22 tantau Exp $
+
+% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode
+<presentation>
+
+\newif\ifbeamer@twoscreenstext
+\newif\ifbeamer@dosecondmode
+
+\defbeameroption{previous slide on second screen}[right]%
+{
+  \pgfpagelayout{two screens with lagging second}[second #1]
+  \beamer@twoscreenstexttrue
+  \nofiles
+}
+
+\defbeameroption{second mode text on second screen}[right]%
+{
+  \pgfpagelayout{two screens with optional second}[second #1]
+  \beamer@twoscreenstexttrue
+}
+
+\defbeameroption{always typeset second mode}[true]%
+{
+  \def\beamer@defaultdosecondmode{#1}
+}
+\def\beamer@defaultdosecondmode{false}
+
+
+\long\def\beamer@dosecondscreennow#1{% called from \beamer@doseveralframes
+  \ifbeamer@dosecondmode%
+    {%
+      \clearpage%
+      \def\beamer@currentmode{second}
+      \def\beamer@doifnotinframe{}%
+      \def\beamer@doifinframe{\begin{beamer@frameslide}%
+          #1%
+        \end{beamer@frameslide}%
+        \pgfcurrentpagewillbelogicalpage{2}%
+        \clearpage%
+      }%
+      {\beamer@masterdecode{\beamer@whichframes}}%
+      \beamer@donow%
+    }%
+  \fi%
+}
+
+
+\mode
+<all>
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/examples/beamerexample1.tex"
+%%% End: 

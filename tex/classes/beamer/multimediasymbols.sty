@@ -1,0 +1,42 @@
+\ProvidesPackage{multimediasymbols}[2004/04/10 ver 0.01]
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>.
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\RequirePackage{keyval}
+\RequirePackage{pgf}
+
+\define@key{multimediasym}{fill}[]{\def\mm@action{\pgfusepath{fill,stroke}}}
+
+\newcommand\speakersymbol[1][]{%
+  \def\mm@action{}%
+  \setkeys{multimediasym}{#1}%
+  \begin{pgfpicture}{-.1ex}{0pt}{2.1ex}{1.5ex}
+    \pgfsetroundjoin
+    \pgfsetroundcap
+    \pgfpathmoveto{\pgfpoint{0cm}{.5\pgfex}}
+    \pgfpathlineto{\pgfpoint{.5\pgfex}{.5\pgfex}}
+    \pgfpathlineto{\pgfpoint{\pgfex}{0pt}}
+    \pgfpathlineto{\pgfpoint{\pgfex}{1.5\pgfex}}
+    \pgfpathlineto{\pgfpoint{.5\pgfex}{\pgfex}}
+    \pgfpathlineto{\pgfpoint{0pt}{\pgfex}}
+    \pgfpathclose
+    \mm@action
+    \pgfpathmoveto{\pgfpoint{1.25\pgfex}{.5\pgfex}}
+    \pgfpathcurveto{\pgfpoint{1.4\pgfex}{.6\pgfex}}{\pgfpoint{1.4\pgfex}{.9\pgfex}}{\pgfpoint{1.25\pgfex}{1\pgfex}}
+    \pgfpathmoveto{\pgfpoint{1.5\pgfex}{.25\pgfex}}
+    \pgfpathcurveto{\pgfpoint{1.7\pgfex}{.5\pgfex}}{\pgfpoint{1.7\pgfex}{1\pgfex}}{\pgfpoint{1.5\pgfex}{1.25\pgfex}}
+    \pgfpathmoveto{\pgfpoint{1.75\pgfex}{0pt}}
+    \pgfpathcurveto{\pgfpoint{2\pgfex}{.25\pgfex}}{\pgfpoint{2\pgfex}{1.25\pgfex}}{\pgfpoint{1.75\pgfex}{1.5\pgfex}}
+    \pgfusepath{stroke}
+  \end{pgfpicture}}
+
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: "~/texmf/tex/latex/beamer/test/test.tex"
+%%% End: 
