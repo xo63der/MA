@@ -1,0 +1,162 @@
+\def\@currdir{./}
+\NeedsTeXFormat{LaTeX2e}[1995/12/01]
+\ProvidesPackage{HAPVorlage_FSU}[2005/11/02]
+\typeout{`HA' FSU-Style for HA-prosper}
+\typeout{(c) Jens Hasenstein}
+\typeout{Package version: 1.4}
+
+% *******************************************
+%           Color - Definitionen
+% *******************************************
+
+\newrgbcolor{fgPraes}{.13 .22 .5} % normal
+\newrgbcolor{fgDPraes}{.18 .0 .48} % dunkler
+\newrgbcolor{fgTitelSlide}{.15 .26 .6}
+\newrgbcolor{fgTitelPraes}{.99 .87 .34}
+\newrgbcolor{fgSidebar}{.18 .0 .48}
+\newrgbcolor{fgFooter}{.18 .0 .48}
+
+\newrgbcolor{HAP@fontTextColor}{.13 .22 .5}
+\newrgbcolor{HAP@fontc}{.13 .22 .5}
+\newrgbcolor{HAP@framecolor}{.13 .22 .5}
+\newrgbcolor{fgLine}{.18 .0 .48}
+%\let\HAP@framecolor=\framecolor   % Dual-Slide-Color
+\let\HAP@textc=\fgPraes
+
+
+% Highlighting definitions Sidebar
+\newrgbcolor{HAP@hcolor}{.18 .0 .48}  % Highlight frame color
+\newrgbcolor{HAP@htcolor}{.99 .99 .99} % Highlight text color
+\def\HAP@hlca{-.00}          % background Highlight frame coordinates relative to entry
+\def\HAP@hlcb{-.07}
+\def\HAP@hlcc{2} % Linie zwischen Sidebar-Eintr‰gen (2)
+\def\HAP@hlcd{.2}
+
+
+% *******************************************
+%    Font:        Titel
+% *******************************************
+
+\FontTitle{\usefont{T1}{uag}{b}{n}\fontsize{14.4pt}{16pt}\selectfont\fgTitleSlide}
+  {\usefont{T1}{phv}{b}{n}\fontsize{14.4pt}{16pt}\selectfont\fgTitelSlide}
+
+% *******************************************
+%    Font:      normaler Text
+% *******************************************
+
+\FontText{\usefont{T1}{phv}{m}{n}\fontsize{11pt}{11pt}\selectfont\HAP@textc}%
+  {\usefont{T1}{phv}{m}{n}\fontsize{11pt}{11pt}\selectfont\HAP@textc}
+
+% *******************************************
+%    Font:        Fuﬂzeile
+% *******************************************
+
+\FontLeftFoot{\fgFooter\fontsize{4pt}{4pt}\selectfont}% Color original: \@fontTextColor
+  {\fgFooter\fontsize{8pt}{8pt}\selectfont}
+\FontRightFoot{\fgFooter\fontsize{4pt}{4pt}\selectfont}%
+  {\fgFooter\fontsize{8pt}{8pt}\selectfont}
+
+% *******************************************
+%    Font:        Sidebar
+% *******************************************
+
+\FontToc{\fgSidebar\fontsize{7.6pt}{6.5pt}\selectfont}% Color original: \@fontTextColor
+  {\fgSidebar\fontsize{7.9pt}{6.8pt}\selectfont}
+
+% ==================================================================================
+
+% Slide style definitions
+\RequirePackage{pst-grad}
+
+% *******************************************
+%              Titelblatt
+% *******************************************
+
+\newcommand{\TitleSlide}[1]{%
+  \Logo(-1.9,-1.6){%
+    \includegraphics[width=13.6cm]{pic/FSU_Title.eps}%
+  }
+  \PutLogo
+  {#1}%
+}%
+
+% ==================================================================================
+
+% *******************************************
+%               normale Seite
+% *******************************************
+
+\newcommand{\NormalSlide}[1]{%
+  \Logo(-1.9,-1.6){%
+    \includegraphics[width=13.6cm]{pic/FSU_Slide.eps}%
+  }
+  \PutLogo
+  % Einsetzen der Sidebar
+  \ifHAP@toc%
+      \rput[lt](-1.7,6){\begin{minipage}[t]{2cm}\HAP@toc\end{minipage}}%(-1.7,8.4)
+  \fi%
+  \HAP@PutLF{tl}{0,-.65}%
+  \HAP@PutRF{tr}{11.2,-.65}%
+  {#1}}%
+\newcommand{\slidetitle}[1]{\rput[lt](.75,3.8){\fontTitle{\fgTitelPraes\textsl{#1}}}}
+
+% *******************************************
+%       Slide OHNE Fuszzeile
+% *******************************************
+
+\newcommand{\SpecialSlide}[1]{%
+  \Logo(-1.9,-1.6){%
+    \includegraphics[width=13.6cm]{pic/FSU_Wide.eps}%
+  }
+  \PutLogo
+  {#1}}%
+
+% *******************************************
+%           Slide MIT Fuszzeile
+% *******************************************
+
+\newcommand{\SpareSlide}[1]{%
+  \Logo(-1.9,-1.6){%
+    \includegraphics[width=13.6cm]{pic/FSU_Part.eps}%
+  }
+  \PutLogo
+  \HAP@PutLF{tl}{-1.65,-.65}%
+  \HAP@PutRF{tr}{11.2,-.65}%
+  {#1}}%
+
+% *******************************************
+%         Beginn des normalen Textes
+% *******************************************
+
+\newcommand{\HAPR@titleSlide}{\NewSlideStyle[11cm]{t}{4.67,1.4}{TitleSlide}}
+\newcommand{\HAPR@normalSlide}{\NewSlideStyle[9.78cm]{tl}{.77,2.7}{NormalSlide}}
+\newcommand{\HAPR@partSlide}{\NewSlideStyle[12.3cm]{tl}{-1.4,3.3}{SpareSlide}}
+\newcommand{\HAPR@wideSlide}{\NewSlideStyle[12.3cm]{tl}{-1.4,3.3}{SpecialSlide}}
+
+% *******************************************
+%  spezielle Listen und Tabellenformatierung
+% *******************************************
+
+% List item definitions: Schrift laden
+\RequirePackage{pifont}
+
+% List item definitions
+\myitem{1}{\fgDPraes\raisebox{1pt}{\fontsize{6pt}{6pt}\selectfont\ding{108}}}%volle runde Kugel
+\myitem{2}{\fgDPraes\raisebox{1pt}{\fontsize{7pt}{7pt}\selectfont\ding{70}}} %4rer Stern
+\myitem{3}{\fgDPraes\raisebox{1pt}{\fontsize{5pt}{5pt}\selectfont\ding{110}}}% Rechteck
+
+% Menu: Style eines Unterpunktes
+\newcommand{\HAP@tline}[1]{\ding{43}\,\parbox[t]{1.675cm}{\raggedright#1}}
+\newcommand{\HAP@tlineonly}[1]{\parbox[t]{1.8cm}{\raggedright#1}}
+
+% Menu: Hauptpunkt mit Hintergrund
+\newcommand{\HAP@tsection}[1]{\psline[linecolor=fgLine,linewidth=.25pt](\HAP@hlca,\HAP@hlcb)(\HAP@hlcc,\HAP@hlcb)%
+\parbox[b]{1.98cm}{\raggedright#1}}
+%
+\newcommand{\HAP@tsectiononly}[1]{\parbox{1.6cm}{\raggedright#1\,}}
+\newcommand{\HAP@tsectionskip}{1em}       % vertikaler Zeilenvorschub (zwischen Eintr‰gen) in TOC
+\newcommand{\HAP@hlptoctext}{%
+   \psframebox[linestyle=none,fillstyle=solid,fillcolor=HAP@hcolor,%
+               boxsep=false,framesep=.03]{\HAP@htcolor\HAP@ptoctext}}%
+%
+\endinput

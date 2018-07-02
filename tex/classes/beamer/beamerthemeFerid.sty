@@ -1,0 +1,37 @@
+\ProvidesPackageRCS $Header: /home/cvs/feriddiss/texmf/beamerthemeFerid.sty,v 1.1 2006/07/03 08:48:28 bajramov Exp $
+
+% Copyright 2004 by Manuel Carro <mcarro@fi.upm.es>
+% Modified 2005 by Ferid Bajramovic
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+\newif\ifbeamer@secheader
+\beamer@secheaderfalse
+
+\DeclareOptionBeamer{secheader}{\beamer@secheadertrue}
+\ProcessOptionsBeamer
+
+\usecolortheme{rose}
+\useinnertheme[shadow]{rounded}
+\usecolortheme{dolphin}
+\useoutertheme{ferid}
+
+
+% Tills' opinion: should be done in an inner theme, not here.
+
+\usesubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\blacktriangleright$}%
+}
+\usesubsubitemizeitemtemplate{%
+    \tiny\raise1.5pt\hbox{\color{beamerstructure}$\bigstar$}%
+}
+
+\setbeamersize{text margin left=1em,text margin right=1em}
+
+\ifbeamer@secheader\else\setbeamertemplate{headline}[default]\fi
+
+\mode
+<all>

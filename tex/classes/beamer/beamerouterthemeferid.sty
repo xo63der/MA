@@ -1,0 +1,63 @@
+\ProvidesPackageRCS $Header: /home/cvs/feriddiss/texmf/beamerouterthemeferid.sty,v 1.1 2006/07/03 08:48:28 bajramov Exp $
+
+% Copyright 2003 by Till Tantau <tantau@users.sourceforge.net>
+% Modified 2005 by Ferid Bajramovic
+%
+% This program can be redistributed and/or modified under the terms
+% of the GNU Public License, version 2.
+
+\mode<presentation>
+
+\setbeamercolor*{author in head/foot}{parent=palette tertiary}
+\setbeamercolor*{title in head/foot}{parent=palette secondary}
+\setbeamercolor*{date in head/foot}{parent=palette primary}
+
+\setbeamercolor*{section in head/foot}{parent=palette tertiary}
+\setbeamercolor*{subsection in head/foot}{parent=palette primary}
+
+\@ifundefined{fshorttitle}{\let\fshorttitle=\insertshorttitle}{}
+\@ifundefined{fshortauthor}{\let\fshortauthor=\insertshortauthor}{}
+
+\defbeamertemplate*{footline}{ferid theme}
+{
+  \leavevmode%
+%  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
+    \usebeamerfont{author in head/foot}\fshortauthor%~~(\insertshortinstitute)
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
+    \usebeamerfont{title in head/foot}\fshorttitle
+  \end{beamercolorbox}%
+  %\begin{beamercolorbox}[wd=.04\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
+  %  \usebeamerfont{date in head/foot}
+  %  %\insertshortdate{}
+  %  %\hspace*{2em}
+  %  \insertframenumber{}
+  %  % / \inserttotalframenumber\hspace*{2ex} 
+  %  \hspace*{.1em}
+  %\end{beamercolorbox}
+%  }%hbox
+  \vskip0pt%
+}
+
+% we don't want no blue icon bar
+\defbeamertemplate*{sidebar right}{ferid theme} {}
+
+\defbeamertemplate*{headline}{ferid theme}
+{
+  \leavevmode%
+  \hbox{%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,right]{section in head/foot}%
+    \usebeamerfont{section in head/foot}\insertsectionhead\hspace*{2ex}
+  \end{beamercolorbox}%
+  \begin{beamercolorbox}[wd=.5\paperwidth,ht=2.25ex,dp=1ex,left]{subsection in head/foot}%
+    \usebeamerfont{subsection in head/foot}\hspace*{2ex}\insertsubsectionhead
+  \end{beamercolorbox}
+  }%
+  \vskip0pt%
+}
+
+\setbeamersize{text margin left=1em,text margin right=1em}
+
+\mode
+<all>

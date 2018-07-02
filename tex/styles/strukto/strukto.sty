@@ -1,0 +1,345 @@
+%%
+%% This is file `strukto.sty',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% strukto.dtx  (with options: `package')
+%% 
+%% Copyright (C) 2000 by Dietrich Paulus. All rights reserved.
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% You are not allowed to change this file.  You may however copy this file
+%% to a file with a different name and then change the copy.
+%% 
+%% You are NOT ALLOWED to distribute this file alone.  You are NOT ALLOWED
+%% to take money for the distribution or use of this file (or a changed
+%% version) except for a nominal charge for copying etc.
+%% 
+%% You are allowed to distribute this file under the condition that it is
+%% distributed together with all files mentioned below.
+%% 
+%% $Id: strukto.dtx,v 1.1 2001/02/05 07:36:42 paulus Exp paulus $
+%% Copyright (C) 2000 Dietrich Paulus
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{strukto}
+         [2000/02/19 v1.01 SUB Package (LME)]
+%% \CharacterTable
+%% {Upper-case    \A\B\C\D\E\F\G\H\I\J\K\L\M\N\O\P\Q\R\S\T\U\V\W\X\Y\Z
+%%  Lower-case    \a\b\c\d\e\f\g\h\i\j\k\l\m\n\o\p\q\r\s\t\u\v\w\x\y\z
+%%  Digits        \0\1\2\3\4\5\6\7\8\9
+%%  Exclamation   \!     Double quote  \"     Hash (number) \#
+%%  Dollar        \$     Percent       \%     Ampersand     \&
+%%  Acute accent  \'     Left paren    \(     Right paren   \)
+%%  Asterisk      \*     Plus          \+     Comma         \,
+%%  Minus         \-     Point         \.     Solidus       \/
+%%  Colon         \:     Semicolon     \;     Less than     \<
+%%  Equals        \=     Greater than  \>     Question mark \?
+%%  Commercial at \@     Left bracket  \[     Backslash     \\
+%%  Right bracket \]     Circumflex    \^     Underscore    \_
+%%  Grave accent  \`     Left brace    \{     Vertical bar  \|
+%%  Right brace   \}     Tilde         \~}
+%%
+%% \iffalse meta-comment
+%% ===================================================================
+%%  @LaTeX-package-file{
+%%     author          = {Dietrich Paulus},
+%%     version         = "$Revision: 1.1 $",
+%%     date            = "$Date: 2001/02/05 07:36:42 $"
+%%     filename        = "strukto.sty",
+%%     address         = "Dietrich Paulus",
+%%     codetable       = "ISO/ASCII",
+%%     keywords        = "LaTeX2e, \shipout",
+%%     supported       = "yes",
+%%     docstring       = "LaTeX package which defines a new hook
+%%                        \EveryShipout".
+%%  }
+%% ===================================================================
+%% \fi
+\message{Document Style Option `STRUKTO' Version 2.0 <03.04.96> by TeXperte}
+
+
+\newbox\strukto@keyword@box
+\newbox\strukto@if@box
+\newbox\strukto@then@box
+\newbox\strukto@else@box
+\newbox\strukto@strut@box
+\newbox\strukto@box
+
+\newdimen\strukto@width
+\newdimen\strukto@indent
+\newdimen\struktohskip
+\newdimen\strut@height    % intern
+
+\def\strukto@vrule{\vrule\hskip-0.4pt}
+\def\strukto@hrule{\hrule\vskip-0.4pt}
+
+\def\strukto@keyword#1{%
+  \hbox{\def\next{#1}%
+        \ifx\next\empty\else
+          \hskip\struktohskip\strut #1\hskip\struktohskip
+        \fi
+  }%
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% old version, to be killed in V2.0
+\@namedef{strukto}{\struktogramm}
+\@namedef{endstrukto}{\endstruktogramm}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newenvironment{struktogramm}[2]{%
+  \bgroup
+    \strukto@width=#1
+    \strukto@indent=#2
+    \struktohskip=.5ex
+    \strut@height=\ht\strutbox
+    \advance\strut@height by 0.4pt
+    \setbox\strukto@strut@box=\hbox{\vrule height \strut@height depth \dp\strutbox width 0pt}%
+    \def\IF{\STRUKTO@IF}%
+    \def\IFx{\STRUKTO@IF}%
+    \def\FOR{\STRUKTO@FOR}%
+    \def\WHILE{\STRUKTO@WHILE}%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% old version, to be killed in V2.0
+    \def\DO{\STRUKTO@REPEAT}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+    \def\REPEAT{\STRUKTO@REPEAT}%
+    \def\LOOP{\STRUKTO@LOOP}%
+    \def\BLOCK{\STRUKTO@BLOCK}%
+    \setbox\strukto@box\hbox to \strukto@width
+    \bgroup
+      \@parboxrestore %Standardabsatz-Parameter einschalten
+      \vtop\bgroup
+        \strukto@hrule %oberer Rand, nicht \strukto@hrule %%%
+}% --- end of preamble ---
+{% --- begin of postable ---
+      \egroup  %vbox beenden
+      \hskip-0.4pt\vrule
+%%%      \strukto@vrule   %rechter Rand
+    \egroup    %hbox beenden
+    \leavevmode
+    \box\strukto@box
+  \egroup
+}% --- end of postamble ---
+
+\def\STRUKTO@IF{\@ifstar{\STRUKTO@@IF{}{l}}%
+                        {\STRUKTO@@IF{}{l}}}
+\def\STRUKTO@IFx{\@ifstar{\STRUKTO@@IF{}{l}}%
+                         {\STRUKTO@@IF{}{l}}}
+\def\STRUKTO@@IF#1#2{\@ifnextchar[{\STRUKTO@@@IF{#1}{#2}}%
+                                  {\STRUKTO@@@IF{#1}{#2}[IF,THEN,ELSE]}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%% old version, to be killed in V2.0
+\def\STRUKTO@FOR{\@ifstar{\STRUKTO@GENERAL[]}%
+                         {\@ifnextchar[{\STRUKTO@GENERAL}%
+                                       {\STRUKTO@GENERAL[FOR]}}}
+\def\STRUKTO@WHILE{\@ifstar{\STRUKTO@GENERAL[]}%
+                           {\@ifnextchar[{\STRUKTO@GENERAL}%
+                                         {\STRUKTO@GENERAL[WHILE]}}}
+\def\STRUKTO@LOOP{\@ifstar{\STRUKTO@@LOOP[]}%
+                          {\@ifnextchar[{\STRUKTO@@LOOP}%
+                                        {\STRUKTO@@LOOP[LOOP]}}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% new version V2.0
+%%% \def\STRUKTO@FOR{\@ifnextchar[{\STRUKTO@GENERAL}%
+%%%                               {\STRUKTO@GENERAL[FOR]}}
+%%% \def\STRUKTO@WHILE{\@ifnextchar[{\STRUKTO@GENERAL}%
+%%%                                 {\STRUKTO@GENERAL[WHILE]}}
+%%% \def\STRUKTO@LOOP{\@ifnextchar[{\STRUKTO@@LOOP}%
+%%%                                {\STRUKTO@@LOOP[LOOP]}}
+
+\def\STRUKTO@@LOOP[#1]{\STRUKTO@GENERAL[#1]{}DO}
+
+\def\STRUKTO@REPEAT{\@ifnextchar[{\STRUKTO@@REPEAT}%
+                                 {\STRUKTO@@REPEAT[UNTIL]}}
+
+\def\STRUKTO@BLOCK{\@ifstar{\STRUKTO@@BLOCK{l}}%
+                           {\STRUKTO@@BLOCK{l}}}
+
+\long\def\STRUKTO@@@IF#1#2[#3,#4,#5]#6THEN#7ELSE#8{%
+  \setbox\strukto@if@box=\strukto@keyword{#3}%
+  \setbox\strukto@then@box=\strukto@keyword{#4}%
+  \setbox\strukto@else@box=\strukto@keyword{#5}%
+  \let\strukto@keyword@box=\strukto@if@box
+  \ifdim\wd\strukto@then@box > \wd\strukto@keyword@box
+    \let\strukto@keyword@box=\strukto@then@box
+  \fi
+  \ifdim\wd\strukto@else@box > \wd\strukto@keyword@box
+    \let\strukto@keyword@box=\strukto@else@box
+  \fi
+  \vtop{%
+    \hsize=\strukto@width
+    \hbox to \strukto@width{%
+      \def\test{#1}%
+      \if\test x% <-- IF-THEN-ELSE links mit Balken versehen ?
+        \strukto@vrule
+        \hskip.5 \strukto@indent
+        \strukto@vrule
+        \advance\strukto@width by -.5 \strukto@indent
+      \fi
+      \vtop{%
+        \hsize=\strukto@width
+        \hbox to \strukto@width{%
+          \strukto@vrule
+          \copy\strukto@if@box
+          \def\test{#2}%
+          \if\test l% <-- IF-Teil wie THEN- u. ELSE-Teil einruecken ?
+            \hfill
+            \strukto@vrule
+            \advance\strukto@width by -\wd\strukto@keyword@box
+          \else
+            \advance\strukto@width by -\wd\strukto@if@box
+          \fi
+          \hskip\struktohskip   % linke Texteinr.
+          \vtop{%
+            \hsize=\strukto@width
+            \advance\hsize by -\struktohskip    % linke Texteinr. beruecks.
+            \advance\hsize by -\struktohskip    % rechte Texteinr. beruecks.
+            \noindent\copy\strukto@strut@box #6\strut
+          }%
+          \hskip\struktohskip   % rechte Texteinr.
+        }%
+        \nointerlineskip
+        \hrule
+        \nointerlineskip
+        \hbox to \strukto@width{%
+          \strukto@vrule   % linker Rand
+          \copy\strukto@then@box
+          \hfill
+          \vtop{%
+            \def\test{#2}%
+            \if\test l% <-- THEN-Teil wie IF- u. ELSE-Teil einruecken ?
+              \advance\strukto@width by -\wd\strukto@keyword@box
+            \else
+              \advance\strukto@width by -\wd\strukto@then@box
+            \fi
+            \hsize=\strukto@width
+            #7%
+          }%
+        }%
+        \def\test{#8}%
+        \ifx\test\empty\else % <-- ELSE-Teil vorhanden ?
+          \nointerlineskip
+          \hrule
+          \nointerlineskip
+          \hbox to \strukto@width{%
+            \strukto@vrule   % linker Rand
+            \copy\strukto@else@box
+            \hfill
+            \vtop{%
+              \def\test{#2}%
+              \if\test l% <-- ELSE-Teil wie IF- u. THEN-Teil einruecken ?
+                \advance\strukto@width by -\wd\strukto@keyword@box
+              \else
+                \advance\strukto@width by -\wd\strukto@else@box
+              \fi
+              \hsize=\strukto@width
+              #8%
+            }%
+          }%
+        \fi
+      }%
+    }%
+    \strukto@hrule   % unterer Rand
+  }%
+  \nointerlineskip
+}
+
+\long\def\STRUKTO@GENERAL[#1]#2DO#3{%
+  \vtop{%
+    \hsize=\strukto@width
+    \hbox to \strukto@width{%
+      \strukto@vrule
+      \setbox\strukto@keyword@box=\strukto@keyword{#1}%
+      \copy\strukto@keyword@box
+      \hskip\struktohskip   % linke Texteinr.
+      \vtop{%
+        \hsize=\strukto@width
+        \advance\hsize by -\wd\strukto@keyword@box
+        \advance\hsize by -\struktohskip    % linke Texteinr. beruecks.
+        \advance\hsize by -\struktohskip    % rechte Texteinr. beruecks.
+        \noindent\copy\strukto@strut@box #2\strut
+      }%
+      \hskip\struktohskip   % rechte Texteinr.
+    }%
+    \nointerlineskip
+    \hbox to \strukto@width{%
+      \strukto@vrule   % linker Rand
+      \hskip\strukto@indent
+      \strukto@vrule   % linker Rand (eigentlich ueberfluessig)
+      \vtop{%
+        \advance\strukto@width by -\strukto@indent
+        \hsize=\strukto@width
+        \nointerlineskip
+        \hrule
+        #3%
+      }%
+    }%
+    \strukto@hrule   % unterer Rand
+  }%
+  \nointerlineskip
+}
+
+\long\def\STRUKTO@@REPEAT[#1]#2UNTIL#3{%
+  \vtop{%
+    \hsize=\strukto@width
+    \hbox to \strukto@width{%
+      \strukto@vrule   % linker Rand
+      \hskip\strukto@indent
+      \strukto@vrule   % linker Rand (eigentlich ueberfluessig)
+      \vtop{%
+        \advance\strukto@width by -\strukto@indent
+        \hsize=\strukto@width
+        #2%
+        \hrule
+      }%
+    }%
+    \nointerlineskip
+    \hbox to \strukto@width{%
+      \strukto@vrule
+      \setbox\strukto@keyword@box=\strukto@keyword{#1}%
+      \copy\strukto@keyword@box
+      \hskip\struktohskip   % linke Texteinr.
+      \vtop{%
+        \hsize=\strukto@width
+        \advance\hsize by -\wd\strukto@keyword@box
+        \advance\hsize by -\struktohskip    % linke Texteinr. beruecks.
+        \advance\hsize by -\struktohskip    % rechte Texteinr. beruecks.
+        \noindent\copy\strukto@strut@box #3\strut
+      }%
+      \hskip\struktohskip   % rechte Texteinr.
+    }%
+    \strukto@hrule   % unterer Rand
+  }%
+  \nointerlineskip
+}
+
+\long\def\STRUKTO@@BLOCK#1#2{%
+  \vtop{%
+    \hsize=\strukto@width
+    \hbox to \strukto@width{%
+      \def\test{#1}%
+      \if\test l% <-- linken Rand ziehen ?
+        \strukto@vrule
+      \fi
+      \hskip\struktohskip   % linke Texteinr.
+      \vtop{%
+        \hsize=\strukto@width
+        \advance\hsize by -\struktohskip    % linke Texteinr. beruecks.
+        \advance\hsize by -\struktohskip    % rechte Texteinr. beruecks.
+        \noindent\copy\strukto@strut@box #2\strut
+      }%
+      \hskip\struktohskip   % rechte Texteinr.
+    }%
+    \strukto@hrule   % unterer Rand
+  }%
+  \nointerlineskip
+}
+
+\endinput
+%%
+%% End of file `strukto.sty'.

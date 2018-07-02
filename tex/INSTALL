@@ -1,0 +1,8 @@
+typically there is a .ins linked in the apropriate subdir
+
+<x>.cls, <x>.sty or similar is created from <x>.dtx with:
+  latex generic.ins
+
+documentation of <x> is created with:
+  latex <x>.dtx
+
