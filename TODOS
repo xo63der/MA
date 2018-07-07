@@ -1,7 +1,6 @@
-Prepare Data -> Bias correction
-Patch Selection, Embedding back
+Prepare Data -> Bias correction -> import itk?
+
+Embedding back
 activity regularizing
 
 heat_map
-
-safe and load weights
