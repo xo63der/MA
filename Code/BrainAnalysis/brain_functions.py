@@ -153,56 +153,54 @@ def loadbatches(path, size, select=True):
     log_batches_temp = []
     
     allpositions=[]
+    vip=[]
     
     listing = os.listdir(path)
     
-    for file in listing:
+    if select:
+
+        for file in listing:
+            
+            img = nilearn.image.load_img(path + file).get_fdata()
+            log = np.absolute(gaussian_laplace(img,1))
+                        
+            maxval=max(img.flatten())
+            minval=min(img.flatten())
+            img=(img-minval)/(maxval-minval)
+                          
+            maxval=max(log.flatten())
+            minval=min(log.flatten())
+            log=(log-minval)/(maxval-minval)
+            
+            x_cuts=int(len(img)/size)
+            y_cuts=int(len(img[0])/size)
+            z_cuts=int(len(img[0][0])/size)
+            x_rest=len(img)%size
+            y_rest=len(img[0])%size
+            z_rest=len(img[0][0])%size
+            
+            pos=np.zeros((x_cuts,x_cuts,z_cuts,3))
+            
+            for i in range(int(x_cuts)):
+                x1=size*i+int(x_rest/2)
+                x2=x1+size
+                for j in range(int(y_cuts)):
+                    y1=size*j+int(y_rest/2)
+                    y2=y1+size
+                    for k in range(int(z_cuts)):
+                        z1=size*k+int(z_rest/2)
+                        z2=z1+size
+                        im_cut=img[x1:x2,y1:y2,z1:z2]
+                        log_cut=log[x1:x2,y1:y2,z1:z2]
+                        batches_temp.append(im_cut)
+                        log_batches_temp.append(log_cut)
+                        pos[i,j,k]=np.array([x1,y1,z1])
+            
+            allpositions.append(pos)
         
-        img = nilearn.image.load_img(path + file).get_fdata()
-        log = np.absolute(gaussian_laplace(img,1))
-    
-        img=np.asarray(img)                
-        maxval=max(img.flatten())
-        minval=min(img.flatten())
-        img=(img-minval)/(maxval-minval)
-        
-        log=np.asarray(log)                
-        maxval=max(log.flatten())
-        minval=min(log.flatten())
-        log=(log-minval)/(maxval-minval)
-        
-        x_cuts=int(len(img)/size)
-        y_cuts=int(len(img[0])/size)
-        z_cuts=int(len(img[0][0])/size)
-        x_rest=len(img)%size
-        y_rest=len(img[0])%size
-        z_rest=len(img[0][0])%size
-        
-        pos=[]
-        
-        for i in range(int(x_cuts)):
-            x1=size*i+int(x_rest/2)
-            x2=x1+size
-            for j in range(int(y_cuts)):
-                y1=size*j+int(y_rest/2)
-                y2=y1+size
-                for k in range(int(z_cuts)):
-                    z1=size*k+int(z_rest/2)
-                    z2=z1+size
-                    im_cut=img[x1:x2,y1:y2,z1:z2]
-                    log_cut=log[x1:x2,y1:y2,z1:z2]
-                    batches_temp.append(im_cut)
-                    log_batches_temp.append(log_cut)
-                    pos.append(np.array([x1,y1,z1]))
-        
-        allpositions.append(pos)
-    
-    batches_temp=np.asarray(batches_temp)                
-    batches=[]
-    
-    vip=[]
-                    
-    if select :                
+        batches_temp=np.asarray(batches_temp)                
+        batches=[]
+                                        
         log_mean=np.zeros((len(batches_temp)))
         for i in range(len(batches_temp)):
             log_mean[i]=np.mean(log_batches_temp[i].flatten())
@@ -210,18 +208,102 @@ def loadbatches(path, size, select=True):
         k=0
         med_log_mean=np.percentile(log_mean,99)
         for i in range(len(allpositions)):
-            for j in range(len(allpositions[i])):
+            cuts=np.shape(allpositions[i])[0]*np.shape(allpositions[i])[1]*np.shape(allpositions[i])[2]
+            for j in range(cuts):
                 if log_mean[k]>med_log_mean:
                     batches.append(batches_temp[k])
                     vip.append(np.array([i,j]))
                 k=k+1
+
+        batches=np.asarray(batches)
     
-    else : batches = batches_temp
-    
-    batches=np.asarray(batches)
+    else :
+        for file in listing:
+            
+            img = nilearn.image.load_img(path + file).get_fdata()
+                      
+            maxval=max(img.flatten())
+            minval=min(img.flatten())
+            img=(img-minval)/(maxval-minval)
+            
+            x_cuts=int(len(img)/size)
+            y_cuts=int(len(img[0])/size)
+            z_cuts=int(len(img[0][0])/size)
+            x_rest=len(img)%size
+            y_rest=len(img[0])%size
+            z_rest=len(img[0][0])%size
+            
+            pos=np.zeros((x_cuts,x_cuts,z_cuts,3))
+            
+            for i in range(int(x_cuts)):
+                x1=size*i+int(x_rest/2)
+                x2=x1+size
+                for j in range(int(y_cuts)):
+                    y1=size*j+int(y_rest/2)
+                    y2=y1+size
+                    for k in range(int(z_cuts)):
+                        z1=size*k+int(z_rest/2)
+                        z2=z1+size
+                        im_cut=img[x1:x2,y1:y2,z1:z2]
+                        batches_temp.append(im_cut)
+                        pos[i,j,k]=np.array([x1,y1,z1])
+            
+            allpositions.append(pos)
+        
+        batches=np.asarray(batches_temp)                
     
     shape=np.shape(batches)
+    print(shape)
     return batches.reshape(shape[0],shape[1],shape[2],shape[3],1),allpositions,vip
+
+def load_whole(path):
+
+    listing = os.listdir(path)
+
+    pics=[]
+
+    for file in listing:
+        img=nilearn.image.load_img(path + file).get_fdata()
+        
+        maxval=max(img.flatten())
+        minval=min(img.flatten())
+        img=(img-minval)/(maxval-minval)
+
+        pics.append(img)
+    
+    return np.asarray(pics)
+
+### recombine from batches to pictures
+
+def recombine(control_batches, control_allpos):
+    n=0
+    cpics=[]
+    for i in range(len(control_allpos)):
+        x_cuts=np.shape(control_allpos[i])[0]
+        y_cuts=np.shape(control_allpos[i])[1]
+        z_cuts=np.shape(control_allpos[i])[2]
+
+        for j in range(x_cuts):
+            for k in range(y_cuts):
+                for l in range(z_cuts):
+                    if l==0:
+                        a=control_batches[n]
+                    else:
+                        a=np.concatenate((a,control_batches[n+j*y_cuts*z_cuts+k*z_cuts+l]),axis=2)                              
+                if k==0:
+                    b=a
+                else:
+                    b=np.concatenate((b,a),axis=1)
+            if j==0:
+                c=b
+            else:
+                c=np.concatenate((c,b),axis=0)
+        n=n+x_cuts*y_cuts*z_cuts
+        cpics.append(c)
+
+    cpics=np.asarray(cpics)
+    shape=np.shape(cpics)
+    return cpics.reshape(shape[0],shape[1],shape[2],shape[3])
 
 ### pretrain
 
@@ -388,7 +470,7 @@ def loadAutoencoder(name,size,maxfil):
 
 ### get grads
 
-def getMaxGrads(input_set,name,size,maxfil,layer_name):
+def getMaxGrads(input_set,name,size,maxfil,layer_name, nof=None):
 
     input_img = Input(shape=(size, size, size,1))
 
@@ -409,15 +491,17 @@ def getMaxGrads(input_set,name,size,maxfil,layer_name):
     autoencoder.load_weights('weights/'+name+'_autoencoder.h5')
 
     layer_dict = dict([(layer.name, layer) for layer in autoencoder.layers[1:]])
-    nof = int(maxfil/4)
 
     len1=len(input_set)
     len2=len(input_set[0])
     len3=len(input_set[0][0])
     len4=len(input_set[0][0][0])
 
-    out = np.zeros((len1,len1,len1,len1))
-    out_fil = np.zeros((len1,len1,len1,len1))
+    out = np.zeros((len1,len2,len3,len4))
+    out_fil = np.zeros((len1,len2,len3,len4))
+
+    if nof == None:
+        nof=int(maxfil/4)
 
     for i in range(nof):
         filter_index = i
@@ -451,5 +535,9 @@ def getMaxGrads(input_set,name,size,maxfil,layer_name):
                     for m in range(len4):
                         if(out[j][k][l][m]>q):
                             out_fil[j][k][l][m]=out[j][k][l][m]
+        
+        print('patch done')
                         
     return out, out_fil
+
+

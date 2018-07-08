@@ -1,6 +1,5 @@
-Prepare Data -> Bias correction -> import itk?
+Prepare Data -> Bias correction -> copy orig data -> get rest -> transform on windows with slicer
 
-Embedding back
 heat_map
 
 activity regularizing
