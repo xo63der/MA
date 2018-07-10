@@ -17,7 +17,7 @@ import os
 import matplotlib.pyplot as plt
 # %matplotlib inline
 
-from keras.datasets import mnist 
+from keras.datasets import mnist
 
 from scipy.ndimage.filters import gaussian_laplace
 import matplotlib.pyplot as plt
@@ -44,12 +44,12 @@ def show_whole(x_test, decoded_imgs=None, n=3):
         plt.imshow(x_test[i][int(np.shape(x_test[i])[0]/2)+1])
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         ax = plt.subplot(6, n, i+1+n)
         plt.imshow(x_test[i][:,int(np.shape(x_test[i])[1]/2)+1,:])
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         ax = plt.subplot(6, n, i+1+2*n)
         plt.imshow(x_test[i][:,:,int(np.shape(x_test[i])[2]/2)+1])
         ax.get_xaxis().set_visible(False)
@@ -60,12 +60,12 @@ def show_whole(x_test, decoded_imgs=None, n=3):
             plt.imshow(decoded_imgs[i][int(np.shape(x_test[i])[0]/2)+1])
             ax.get_xaxis().set_visible(False)
             ax.get_yaxis().set_visible(False)
-            
+
             ax = plt.subplot(6, n, i+1+4*n)
             plt.imshow(decoded_imgs[i][:,int(np.shape(x_test[i])[1]/2)+1,:])
             ax.get_xaxis().set_visible(False)
             ax.get_yaxis().set_visible(False)
-        
+
             ax = plt.subplot(6, n, i+1+5*n)
             plt.imshow(decoded_imgs[i][:,:,int(np.shape(x_test[i])[2]/2)+1])
             ax.get_xaxis().set_visible(False)
@@ -79,12 +79,12 @@ def show_batch(x_test, size, decoded_imgs=None, n=7):
         plt.imshow(x_test[i][int(size/2)+1].reshape(size,size))
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         ax = plt.subplot(6, n, i+1+n)
         plt.imshow(x_test[i][:,int(size/2)+1,:].reshape(size,size))
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         ax = plt.subplot(6, n, i+1+2*n)
         plt.imshow(x_test[i][:,:,int(size/2)+1].reshape(size,size))
         ax.get_xaxis().set_visible(False)
@@ -95,18 +95,18 @@ def show_batch(x_test, size, decoded_imgs=None, n=7):
             plt.imshow(decoded_imgs[i][int(size/2)+1].reshape(size,size))
             ax.get_xaxis().set_visible(False)
             ax.get_yaxis().set_visible(False)
-            
+
             ax = plt.subplot(6, n, i+1+4*n)
             plt.imshow(decoded_imgs[i][:,int(size/2)+1,:].reshape(size,size))
             ax.get_xaxis().set_visible(False)
             ax.get_yaxis().set_visible(False)
-        
+
             ax = plt.subplot(6, n, i+1+5*n)
             plt.imshow(decoded_imgs[i][:,:,int(size/2)+1].reshape(size,size))
             ax.get_xaxis().set_visible(False)
             ax.get_yaxis().set_visible(False)
     plt.show()
-    
+
 def show_encoded(x_test, size, encoded_imgs, n1, n=10):
 
     plt.figure(figsize=(20, 10))
@@ -115,34 +115,34 @@ def show_encoded(x_test, size, encoded_imgs, n1, n=10):
         plt.imshow(x_test[i][int(size/2)+1].reshape(size,size))
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         ax = plt.subplot(3*(n1+1), n, i+1+n)
         plt.imshow(x_test[i][:,int(size/2)+1,:].reshape(size,size))
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         ax = plt.subplot(3*(n1+1), n, i+1+2*n)
         plt.imshow(x_test[i][:,:,int(size/2)+1].reshape(size,size))
         ax.get_xaxis().set_visible(False)
         ax.get_yaxis().set_visible(False)
-        
+
         if encoded_imgs is not None:
             for j in range(n1):
                 ax = plt.subplot(3*(n1+1), n, i+1+(3+3*j)*n)
                 plt.imshow(encoded_imgs[i][int(size/6)+1,:,:,j].reshape(int(size/3),int(size/3)))
                 ax.get_xaxis().set_visible(False)
                 ax.get_yaxis().set_visible(False)
-        
+
                 ax = plt.subplot(3*(n1+1), n, i+1+(4+3*j)*n)
                 plt.imshow(encoded_imgs[i][:,int(size/6)+1,:,j].reshape(int(size/3),int(size/3)))
                 ax.get_xaxis().set_visible(False)
                 ax.get_yaxis().set_visible(False)
-        
+
                 ax = plt.subplot(3*(n1+1), n, i+1+(5+3*j)*n)
                 plt.imshow(encoded_imgs[i][:,:,int(size/6)+1,j].reshape(int(size/3),int(size/3)))
                 ax.get_xaxis().set_visible(False)
                 ax.get_yaxis().set_visible(False)
-            
+
     plt.show()
 
 ### load/preprocess data
@@ -151,36 +151,36 @@ def loadbatches(path, size, select=True):
 
     batches_temp = []
     log_batches_temp = []
-    
+
     allpositions=[]
     vip=[]
-    
+
     listing = os.listdir(path)
-    
+
     if select:
 
         for file in listing:
-            
+
             img = nilearn.image.load_img(path + file).get_fdata()
             log = np.absolute(gaussian_laplace(img,1))
-                        
+
             maxval=max(img.flatten())
             minval=min(img.flatten())
             img=(img-minval)/(maxval-minval)
-                          
+
             maxval=max(log.flatten())
             minval=min(log.flatten())
             log=(log-minval)/(maxval-minval)
-            
+
             x_cuts=int(len(img)/size)
             y_cuts=int(len(img[0])/size)
             z_cuts=int(len(img[0][0])/size)
             x_rest=len(img)%size
             y_rest=len(img[0])%size
             z_rest=len(img[0][0])%size
-            
+
             pos=np.zeros((x_cuts,x_cuts,z_cuts,3))
-            
+
             for i in range(int(x_cuts)):
                 x1=size*i+int(x_rest/2)
                 x2=x1+size
@@ -195,12 +195,12 @@ def loadbatches(path, size, select=True):
                         batches_temp.append(im_cut)
                         log_batches_temp.append(log_cut)
                         pos[i,j,k]=np.array([x1,y1,z1])
-            
+
             allpositions.append(pos)
-        
-        batches_temp=np.asarray(batches_temp)                
+
+        batches_temp=np.asarray(batches_temp)
         batches=[]
-                                        
+
         log_mean=np.zeros((len(batches_temp)))
         for i in range(len(batches_temp)):
             log_mean[i]=np.mean(log_batches_temp[i].flatten())
@@ -216,25 +216,25 @@ def loadbatches(path, size, select=True):
                 k=k+1
 
         batches=np.asarray(batches)
-    
+
     else :
         for file in listing:
-            
+
             img = nilearn.image.load_img(path + file).get_fdata()
-                      
+
             maxval=max(img.flatten())
             minval=min(img.flatten())
             img=(img-minval)/(maxval-minval)
-            
+
             x_cuts=int(len(img)/size)
             y_cuts=int(len(img[0])/size)
             z_cuts=int(len(img[0][0])/size)
             x_rest=len(img)%size
             y_rest=len(img[0])%size
             z_rest=len(img[0][0])%size
-            
+
             pos=np.zeros((x_cuts,x_cuts,z_cuts,3))
-            
+
             for i in range(int(x_cuts)):
                 x1=size*i+int(x_rest/2)
                 x2=x1+size
@@ -247,30 +247,35 @@ def loadbatches(path, size, select=True):
                         im_cut=img[x1:x2,y1:y2,z1:z2]
                         batches_temp.append(im_cut)
                         pos[i,j,k]=np.array([x1,y1,z1])
-            
+
             allpositions.append(pos)
-        
-        batches=np.asarray(batches_temp)                
-    
+
+        batches=np.asarray(batches_temp)
+
     shape=np.shape(batches)
     print(shape)
     return batches.reshape(shape[0],shape[1],shape[2],shape[3],1),allpositions,vip
 
-def load_whole(path):
+def load_whole(path, val=10):
 
     listing = os.listdir(path)
 
     pics=[]
 
-    for file in listing:
-        img=nilearn.image.load_img(path + file).get_fdata()
-        
-        maxval=max(img.flatten())
-        minval=min(img.flatten())
-        img=(img-minval)/(maxval-minval)
+    i=0
 
-        pics.append(img)
-    
+    for file in listing:
+        if i<val:
+            i+=1
+
+            img=nilearn.image.load_img(path + file).get_fdata()
+
+            maxval=max(img.flatten())
+            minval=min(img.flatten())
+            img=(img-minval)/(maxval-minval)
+
+            pics.append(img)
+
     return np.asarray(pics)
 
 ### recombine from batches to pictures
@@ -289,7 +294,7 @@ def recombine(control_batches, control_allpos):
                     if l==0:
                         a=control_batches[n]
                     else:
-                        a=np.concatenate((a,control_batches[n+j*y_cuts*z_cuts+k*z_cuts+l]),axis=2)                              
+                        a=np.concatenate((a,control_batches[n+j*y_cuts*z_cuts+k*z_cuts+l]),axis=2)
                 if k==0:
                     b=a
                 else:
@@ -307,12 +312,12 @@ def recombine(control_batches, control_allpos):
 
 ### pretrain
 
-def pretrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):   
-    
+def pretrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):
+
     ### pretrain1
 
     print('pretrain #1')
-    
+
     input_img = Input(shape=(size, size,size,1), dtype='float64')
 
     train1_c1=Conv3D(maxfil, (3, 3, 3), activation='sigmoid', padding='same', name='t1c1')(input_img)
@@ -321,7 +326,7 @@ def pretrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):
     train1_autoencoder = Model(input_img, train1_decoded)
     train1_autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
 
-    train1_autoencoder.fit(train_batches, train_batches, 
+    train1_autoencoder.fit(train_batches, train_batches,
                            validation_data=(test_batches, test_batches),
                            epochs=eps, batch_size=bs_z, verbose=1)
 
@@ -350,7 +355,7 @@ def pretrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):
     train2_autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
 
     train2_autoencoder.fit(input_train2, input_train2, epochs=eps, batch_size=bs_z, verbose=1)
-    
+
     train2_autoencoder.save_weights('weights/'+name+'_train2.h5')
 
     ### pretrain3
@@ -374,7 +379,7 @@ def pretrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):
     train3_autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
 
     train3_autoencoder.fit(input_train3, input_train3, epochs=eps, batch_size=bs_z, verbose=1)
-    
+
     train3_autoencoder.save_weights('weights/'+name+'_train3.h5')
 
     ### pretrain4
@@ -400,7 +405,7 @@ def pretrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):
     train4_autoencoder.compile(optimizer='adadelta', loss='mean_squared_error')
 
     train4_autoencoder.fit(input_train4, input_train4, epochs=eps, batch_size=bs_z, verbose=1)
-    
+
     train4_autoencoder.save_weights('weights/'+name+'_train4.h5')
 
 ### unroll/train
@@ -433,7 +438,7 @@ def unrollAndTrain(train_batches,test_batches,name,size,maxfil,bs_z,eps):
     ### finetune
 
     autoencoder.fit(train_batches, train_batches, epochs=eps, validation_data=(test_batches, test_batches), batch_size=bs_z, verbose=1)
-    
+
     autoencoder.save_weights('weights/'+name+'_autoencoder.h5')
 
     encoder = Model(input_img, encoded)
@@ -465,7 +470,7 @@ def loadAutoencoder(name,size,maxfil):
 
     encoder = Model(input_img, encoded)
     encoder.compile(optimizer='adadelta', loss='mean_squared_error')
-    
+
     return autoencoder, encoder
 
 ### get grads
@@ -519,7 +524,7 @@ def getMaxGrads(input_set,name,size,maxfil,layer_name, nof=None):
         iterate = K.function([input_img], [loss, grads])
 
         it = iterate([input_set])
-        
+
         for j in range(len1):
             for k in range(len2):
                 for l in range(len3):
@@ -535,9 +540,7 @@ def getMaxGrads(input_set,name,size,maxfil,layer_name, nof=None):
                     for m in range(len4):
                         if(out[j][k][l][m]>q):
                             out_fil[j][k][l][m]=out[j][k][l][m]
-        
+
         print('patch done')
-                        
+
     return out, out_fil
-
-
