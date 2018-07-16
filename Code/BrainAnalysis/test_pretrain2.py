@@ -37,8 +37,6 @@ from nilearn import plotting
 
 import brain_functions_final as bf
 
-K.set_learning_phase(1)
-
 ### Create input
 
 size=21
@@ -63,8 +61,8 @@ print('loading pretraining')
 
 #bf.pretrainPerPic(train_path, size, name, maxfil, eps, True)
 
-#bf.pretrain1_perPic(train_path, size, name, maxfil, eps, True)
-#gc.collect()
+bf.pretrain1_perPic(train_path, size, name, maxfil, eps, True)
+gc.collect()
 
 bf.pretrain2_perPic(train_path, size, name, maxfil, eps, True)
 gc.collect()

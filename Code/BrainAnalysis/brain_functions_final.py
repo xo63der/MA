@@ -635,6 +635,8 @@ def loadOnly(path, file, size, overlap=False):
 
 def pretrain1(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
 
+    K.set_learning_phase(1)
+
     input_img = Input(shape=(size, size,size,1), dtype='float32')
 
     train1_c1=Conv3D(maxfil, (3, 3, 3), activation='sigmoid', padding='same', name='t1c1', activity_regularizer=kl_reg)(input_img)
@@ -653,7 +655,16 @@ def pretrain1(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
 
     train1_autoencoder.save_weights('weights/'+name+'_train1.h5')
 
+    del train_batches
+    del train1_autoencoder
+    del input_img
+    K.clear_session
+    K.set_learning_phase(0)
+    gc.collect()
+
 def pretrain2(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
+
+    K.set_learning_phase(1)
 
     input_img = Input(shape=(size, size,size,1), dtype='float32')
     train1_c1=Conv3D(maxfil, (3, 3, 3), activation='sigmoid', padding='same', name='t1c1', activity_regularizer=kl_reg)(input_img)
@@ -682,14 +693,18 @@ def pretrain2(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
 
     train2_autoencoder.save_weights('weights/'+name+'_train2.h5')
 
-    K.clear_session
     del creator_train2
     del train2_autoencoder
     del train_batches
     del input_train2
+    del input_img
+    K.clear_session
+    K.set_learning_phase(0)
     gc.collect()
 
 def pretrain3(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
+
+    K.set_learning_phase(1)
 
     input_img = Input(shape=(size, size,size,1), dtype='float32')
     train1_c1=Conv3D(maxfil, (3, 3, 3), activation='sigmoid', padding='same', name='t1c1', activity_regularizer=kl_reg)(input_img)
@@ -724,15 +739,19 @@ def pretrain3(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
 
     train3_autoencoder.save_weights('weights/'+name+'_train3.h5')
 
-    K.clear_session
     del creator_train2
     del creator_train3
     del train3_autoencoder
     del train_batches
     del input_train3
+    del input_img
+    K.clear_session
+    K.set_learning_phase(0)
     gc.collect()
 
 def pretrain4(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
+
+    K.set_learning_phase(1)
 
     input_img = Input(shape=(size, size,size,1), dtype='float32')
     train1_c1=Conv3D(maxfil, (3, 3, 3), activation='sigmoid', padding='same', name='t1c1', activity_regularizer=kl_reg)(input_img)
@@ -775,13 +794,15 @@ def pretrain4(train_batches,name,size,maxfil,bs_z,eps,p,load_name=None):
 
     train4_autoencoder.save_weights('weights/'+name+'_train4.h5')
 
-    K.clear_session
     del creator_train2
     del creator_train3
     del creator_train4
     del train3_autoencoder
     del train_batches
     del input_train4
+    del input_img
+    K.clear_session
+    K.set_learning_phase(0)
     gc.collect()
 
 def pretrainPerPic(path, size, name, maxfil, eps, overlap=False):
